@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMCA 소망나무 기부 캠페인 입금 계좌</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .account-info, .privacy-policy {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: transparent;
+            font-size: 16px;
+            width: 80%;
+            max-width: 600px;
+            text-align: left;
+        }
+        .account-number {
+            padding: 10px 20px;
+            background-color: #f37021;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+            margin-top: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+            width: 80%;
+            max-width: 600px;
+        }
+        label, input {
+            font-size: 16px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #f37021;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .thank-you-message {
+            margin-top: 30px;
+            font-size: 18px;
+            text-align: center;
+            color: black;
+        }
+        .letter-image {
+            margin: 20px 0;
+            max-width: 300px;
+            cursor: pointer;
+            height: auto;
+        }
+        .organization-logo {
+            margin-top: 10px;
+            max-width: 300px;
+            height: auto;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .important-note {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>MMCA 소망나무 기부 캠페인 입금 계좌</h1>
+
+<div class="account-info">
+    <p>예금주: <strong>사회복지법인 월드비전</strong></p>
+    <p>계좌번호: <strong>26980074318544</strong> (우리은행)</p>
+</div>
+
+<div class="account-number" id="accountNumber">계좌번호 복사하기(클릭)</div>
+
+<div class="thank-you-message">
+    보내주신 소중한 기부금 국내 아동을 위한 미술심리치료 사업에 사용됩니다.<br>
+    카카오 알림톡은 익일 오전 일괄 발송됩니다. <br>
+    감사합니다.
+</div>
+
+<!-- 개인정보 수집 및 동의 섹션 -->
+<h2>이벤트 안내용 카카오 알림톡 발송을 위해 연락처를 남겨주세요(선택사항)</h2>
+
+<div class="privacy-policy">
+    <p><strong>개인 정보 수집 동의(선택)</strong></p>
+    <p>① 개인 정보의 수집 및 이용 목적 <br>
+    - 소망나무 캠페인 기부자 이벤트 참여용 카카오 알림톡 발송</p>
+    <p>② 수집 및 이용하려는 개인정보의 항목 : 연락처(휴대전화)</p>
+    <p>③ 개인정보를 제공받는 자의 개인정보 보유 및 이용 기간 : 소망나무 행사 종료 후 즉시 파기</p>
+    <p class="important-note">*미동의시 이벤트 참여가 어렵습니다.</p>
+</div>
+
+<!-- 연락처 제출 폼 -->
+<form id="donationForm" action="https://formspree.io/f/mkgnjdzo" method="POST">
+    <label for="phone">연락처 (휴대폰 번호):</label>
+    <input type="tel" id="phone" name="phone" pattern="\d{11}" placeholder="01012345678" required>
+
+    <label for="contact-consent">
+        <input type="checkbox" id="contact-consent" name="contact-consent">
+        연락처 수집에 동의합니다.
+    </label>
+
+    <button type="button" onclick="submitForm()">연락처 제출하기</button>
+</form>
+
+<!-- 클릭 가능한 편지 이미지 -->
+<img src="letter.png" alt="편지 이미지" class="letter-image" id="letterImage">
+
+<!-- 로고 이미지 -->
+<img src="logo.png" alt="사회복지법인 월드비전 로고" class="organization-logo">
+
+<!-- 모달 구조 -->
+<div class="modal" id="modal">
+    <span class="close" id="closeModal">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+<script>
+    document.getElementById('accountNumber').addEventListener('click', function() {
+        const accountNumber = '26980074318544';
+        navigator.clipboard.writeText(accountNumber).then(() => {
+            alert('계좌번호가 복사되었습니다: ' + accountNumber);
+        }).catch(err => {
+            console.error('복사 실패: ', err);
+        });
+    });
+
+    function submitForm() {
+        const consentCheckbox = document.getElementById('contact-consent');
+        if (!consentCheckbox.checked) {
+            alert("이벤트 참여를 위해 개인정보 수집에 동의해주세요.");
+        } else {
+            document.getElementById('donationForm').submit();
+        }
+    }
+
+    // 모달 요소들 선택
+    const modal = document.getElementById("modal");
+    const modalImage = document.getElementById("modalImage");
+    const letterImage = document.getElementById("letterImage");
+    const closeModal = document.getElementById("closeModal");
+
+    // 편지 이미지 클릭 시 모달 열기
+    letterImage.onclick = function() {
+        modal.style.display = "flex";
+        modalImage.src = this.src;
+    }
+
+    // 모달 닫기 버튼 클릭 시 모달 닫기
+    closeModal.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // 모달 외부 영역 클릭 시 모달 닫기
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
